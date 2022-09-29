@@ -46,7 +46,15 @@ public class PhotoLibraryPermission: Permission {
     }
     
     public override var status: Permission.Status {
-        switch PHPhotoLibrary.authorizationStatus() {
+        var status = PHAuthorizationStatus.notDetermined
+        
+        if #available(iOS 14, *) {
+            status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        } else {
+            // Fallback on earlier versions
+            status = PHPhotoLibrary.authorizationStatus()
+        }
+        switch status {
         case .authorized: return .authorized
         case .denied: return .denied
         case .notDetermined: return .notDetermined
