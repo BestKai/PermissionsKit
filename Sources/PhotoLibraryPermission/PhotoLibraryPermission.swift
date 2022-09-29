@@ -52,7 +52,7 @@ public class PhotoLibraryPermission: Permission {
         case .notDetermined: return .notDetermined
         case .restricted: return .denied
         case .limited: return .authorized
-        @unknown default: return .denied
+        @unknown default: return .limited
         }
     }
     
